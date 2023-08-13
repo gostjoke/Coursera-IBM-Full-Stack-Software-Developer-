@@ -1,5 +1,7 @@
-7 Developing Applications with SQL, Databases, and Django
+<H1>7 Developing Applications with SQL, Databases, and Django </H1>
+<hr>
 Final Project
+<hr>
 **General Notes**
 
 An `onlinecourse` app has already been provided in this repo upon which you will be adding a new assesement feature.
