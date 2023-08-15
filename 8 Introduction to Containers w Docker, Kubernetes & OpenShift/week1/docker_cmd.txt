@@ -1,0 +1,71 @@
+docker images
+docker pull hello-world
+docker images
+docker run hello-world
+
+# Verify that that the container has been removed. Run the following command.
+docker ps -a
+
+docker container rm <container_id>
+
+docker build . -t myimage:v1
+
+docker images
+
+docker run -dp 8080:8080 myimage:v1
+
+curl localhost:8080
+
+docker stop $(docker ps -q)
+
+
+######
+The environment should have already logged you into the IBM Cloud account that has been automatically generated for you by the Skills Network Labs environment. 
+The following command will give you information about the account you’re targeting:
+
+ibmcloud target
+
+
+#####
+The environment also created an IBM Cloud Container Registry (ICR) namespace for you. 
+Since Container Registry is multi-tenant, namespaces are used to divide the registry among several users.
+Use the following command to see the namespaces you have access to:
+
+ibmcloud cr namespaces
+
+
+#####
+Ensure that you are targeting the region appropriate to your cloud account, 
+for instance us-south region where these namespaces reside as you saw in the output of the ibmcloud target command.
+
+ibmcloud cr region-set us-south
+
+#####
+Log your local Docker daemon into IBM Cloud Container Registry so that you can push to and pull from the registry.
+ibmcloud cr login
+
+#####
+Export your namespace as an environment variable so that it can be used in subsequent commands.
+
+export MY_NAMESPACE=sn-labs-$USERNAME
+
+
+##### 
+Tag your image so that it can be pushed to IBM Cloud Container Registry.
+
+docker tag myimage:v1 us.icr.io/$MY_NAMESPACE/hello-world:1
+
+#####
+Push the newly tagged image to IBM Cloud Container Registry.
+
+docker push us.icr.io/$MY_NAMESPACE/hello-world:1
+docker push us.icr.io/sn-labs-tienweih/hello-world:1
+
+######
+Verify that the image was successfully pushed by listing images in Container Registry.
+ibmcloud cr images
+
+
+####
+Optionally, to only view images within a specific namespace.
+ibmcloud cr images --restrict $MY_NAMESPACE
